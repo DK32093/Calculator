@@ -27,7 +27,7 @@ for (i = 1; i <= 4; i++) {
         if (i === 4 && c === 5) newBut.remove();
         if (i === 4 && c === 3) newBut.remove();
     }
-}
+};
 
 
 // basic math functions
@@ -66,8 +66,8 @@ function operate (num1, op, num2) {
 };
 
 // Display function
+let displayContent = document.querySelector(".displayContent");
 function displayButtonText (e) {
-    let displayContent = document.querySelector(".displayContent");
     let buttonText = e.target.innerText;
     displayText = document.createTextNode(buttonText);
     displayContent.appendChild(displayText);
@@ -78,3 +78,7 @@ let singleButton = document.querySelectorAll(".singleButton");
 singleButton.forEach(function(but) { 
     but.addEventListener("click", displayButtonText)
 });
+
+// Add event listener for clear button click
+let clearButton = document.querySelector(".clearButton");
+clearButton.addEventListener("click", () => displayContent.textContent = "");

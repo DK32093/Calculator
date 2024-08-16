@@ -54,10 +54,11 @@ body {
     height: 50px;
     border: 5px solid darkgray;
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
 }
 
 .displayContent {
     font-size: 30px;
+    padding-right: 5px;
 }
