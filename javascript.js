@@ -1,4 +1,36 @@
 
+// Create buttons
+const buttons = document.querySelector(".buttons");
+
+buttonText = ["7", "8", "9", "+", "-", 
+              "4", "5", "6", "*", "/", 
+              "1", "2", "3", ".", "=", 
+              "0", "clear", " ", "back"]
+
+let ind = 0;
+for (i = 1; i <= 4; i++) {
+    let row = document.createElement("div");
+    buttons.appendChild(row);
+    row.setAttribute("class", "row");
+    for (c = 1; c <= 5; c++) {
+        let newBut = document.createElement("button");
+        newBut.textContent = buttonText[ind];
+        ind = ind + 1;
+        row.appendChild(newBut);
+        if (i === 4 && c === 4) {
+            newBut.setAttribute("class", "backButton");
+        } else if (i === 4 && c === 2) {
+            newBut.setAttribute("class", "clearButton");
+        } else {
+            newBut.setAttribute("class", "singleButton");
+        }
+        if (i === 4 && c === 5) newBut.remove();
+        if (i === 4 && c === 3) newBut.remove();
+    }
+}
+
+
+
 // basic math functions
 function add (a, b) {
     return a + b;
