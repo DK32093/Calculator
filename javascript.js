@@ -82,3 +82,10 @@ singleButton.forEach(function(but) {
 // Add event listener for clear button click
 let clearButton = document.querySelector(".clearButton");
 clearButton.addEventListener("click", () => displayContent.textContent = "");
+
+// Add event listener for back button
+let backButton = document.querySelector(".backButton");
+backButton.addEventListener("click", () => { 
+    displayContent.removeChild(displayText);
+    displayText = displayContent.lastChild;
+});
