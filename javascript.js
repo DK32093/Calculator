@@ -30,7 +30,6 @@ for (i = 1; i <= 4; i++) {
 }
 
 
-
 // basic math functions
 function add (a, b) {
     return a + b;
@@ -53,6 +52,7 @@ let firstNumber;
 let operator;
 let secondNumber;
 
+// Operate function for when "=" is clicked
 function operate (num1, op, num2) {
     if (op === "+") {
         return add(num1, num2);
@@ -64,3 +64,17 @@ function operate (num1, op, num2) {
         return divide(num1, num2);
     };
 };
+
+// Display function
+function displayButtonText (e) {
+    let displayContent = document.querySelector(".displayContent");
+    let buttonText = e.target.innerText;
+    displayText = document.createTextNode(buttonText);
+    displayContent.appendChild(displayText);
+};
+
+// Add event listener for value button clicks
+let singleButton = document.querySelectorAll(".singleButton");
+singleButton.forEach(function(but) { 
+    but.addEventListener("click", displayButtonText)
+});
