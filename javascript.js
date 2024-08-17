@@ -1,18 +1,19 @@
+"use strict";
 
 // Create buttons
 const buttons = document.querySelector(".buttons");
 
-buttonText = ["7", "8", "9", "+", "-", 
+let buttonText = ["7", "8", "9", "+", "-", 
               "4", "5", "6", "*", "/", 
               "1", "2", "3", ".", "=", 
               "0", "clear", " ", "back"]
 
 let ind = 0;
-for (i = 1; i <= 4; i++) {
+for (let i = 1; i <= 4; i++) {
     let row = document.createElement("div");
     buttons.appendChild(row);
     row.setAttribute("class", "row");
-    for (c = 1; c <= 5; c++) {
+    for (let c = 1; c <= 5; c++) {
         let newBut = document.createElement("button");
         newBut.textContent = buttonText[ind];
         ind = ind + 1;
@@ -24,13 +25,19 @@ for (i = 1; i <= 4; i++) {
         } else {
             newBut.setAttribute("class", "singleButton");
         }
+        // Remove 3rd and 5th buttons from last row for wider "back" and "clear" buttons
         if (i === 4 && c === 5) newBut.remove();
         if (i === 4 && c === 3) newBut.remove();
+        // Add second "operator" class to operator buttons
+        if (["+", "-", "*", "/"].includes(newBut.innerText)) {
+            newBut.classList.add("operator");
+        };
+        if (newBut.innerText === "=") newBut.classList.add("equals");
     }
 };
 
 
-// basic math functions
+// Basic math functions
 function add (a, b) {
     return a + b;
 };
@@ -69,13 +76,13 @@ function operate (num1, op, num2) {
 let displayContent = document.querySelector(".displayContent");
 function displayButtonText (e) {
     let buttonText = e.target.innerText;
-    displayText = document.createTextNode(buttonText);
+    let displayText = document.createTextNode(buttonText);
     displayContent.appendChild(displayText);
 };
 
-// Add event listener for value button clicks
+// Add event listener to display value button clicks
 let singleButton = document.querySelectorAll(".singleButton");
-singleButton.forEach(function(but) { 
+singleButton.forEach((but) => { 
     but.addEventListener("click", displayButtonText)
 });
 
@@ -86,6 +93,13 @@ clearButton.addEventListener("click", () => displayContent.textContent = "");
 // Add event listener for back button
 let backButton = document.querySelector(".backButton");
 backButton.addEventListener("click", () => { 
-    displayContent.removeChild(displayText);
-    displayText = displayContent.lastChild;
+    displayContent.removeChild(displayContent.lastChild);
+});
+
+
+// Add event listener for first number (first operator)
+let operators = document.querySelectorAll(".operator");
+operators.forEach((oper) => {
+    oper.addEventListener("click", () => 
+        firstNumber = displayContent.innerText.slice(0, -1))
 });
