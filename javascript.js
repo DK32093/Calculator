@@ -32,7 +32,7 @@ for (let i = 1; i <= 4; i++) {
         if (["+", "-", "*", "/"].includes(newBut.innerText)) {
             newBut.classList.add("operator");
         };
-        if (newBut.innerText === "=") newBut.classList.add("equals");
+        if (newBut.innerText === "=") newBut.setAttribute("class", "equals");
     }
 };
 
@@ -103,3 +103,9 @@ operators.forEach((oper) => {
     oper.addEventListener("click", () => 
         firstNumber = displayContent.innerText.slice(0, -1))
 });
+
+// Add equals event listener
+let equals = document.querySelector(".equals");
+equals.addEventListener("click", () => {
+    secondNumber = displayContent.innerText.slice(firstNumber.length + 1)
+})

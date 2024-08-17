@@ -48,6 +48,10 @@ body {
     flex-grow: 2;
 }
 
+.equals {
+    flex: 1;
+}
+
 .display {
     background-color: lightgray;
     width: 280px;
