@@ -28,10 +28,11 @@ for (let i = 1; i <= 4; i++) {
         // Remove 3rd and 5th buttons from last row for wider "back" and "clear" buttons
         if (i === 4 && c === 5) newBut.remove();
         if (i === 4 && c === 3) newBut.remove();
-        // Add second "operator" class to operator buttons
+        // Add "operator" class to operator buttons
         if (["+", "-", "*", "/"].includes(newBut.innerText)) {
-            newBut.classList.add("operator");
+            newBut.setAttribute("class", "operator");
         };
+        // Add "equals" class
         if (newBut.innerText === "=") newBut.setAttribute("class", "equals");
     }
 };
@@ -58,6 +59,7 @@ function divide (a, b) {
 let firstNumber;
 let operator;
 let secondNumber;
+let solution;
 
 // Operate function for when "=" is clicked
 function operate (num1, op, num2) {
@@ -96,16 +98,18 @@ backButton.addEventListener("click", () => {
     displayContent.removeChild(displayContent.lastChild);
 });
 
-
 // Add event listener for first number (first operator)
 let operators = document.querySelectorAll(".operator");
 operators.forEach((oper) => {
-    oper.addEventListener("click", () => 
-        firstNumber = displayContent.innerText.slice(0, -1))
+    oper.addEventListener("click", (e) => {
+        firstNumber = displayContent.innerText.slice(0, -1);
+        operator = e.target.innerText})
 });
 
 // Add equals event listener
 let equals = document.querySelector(".equals");
 equals.addEventListener("click", () => {
-    secondNumber = displayContent.innerText.slice(firstNumber.length + 1)
-})
+    secondNumber = displayContent.innerText.slice(firstNumber.length + 1);
+    solution = operate(Number(firstNumber), operator, Number(secondNumber));
+    displayContent.textContent = solution;
+});

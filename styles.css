@@ -34,22 +34,14 @@ body {
     gap: 20px;
 }
 
-.singleButton {
+.singleButton, .operator, .equals {
     width: 40px;
     height: 40px;
     font-size: 15px;
 }
 
-.backButton {
+.backButton, .clearButton {
     flex-grow: 2;
-}
-
-.clearButton {
-    flex-grow: 2;
-}
-
-.equals {
-    flex: 1;
 }
 
 .display {
