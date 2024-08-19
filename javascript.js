@@ -58,10 +58,10 @@ function divide (a, b) {
 
 // Calculator operation variables
 let firstNumber;
-let operator = "";
+let operator = 1; // Set to 1 to clear the first "0" in the opening display
 let secondNumber;
 let solution;
-let count = 0;
+let count = 0; // Used to clear display for a new entry after an operator
 
 // Operate function for when equals or second operator is clicked
 function operate (num1, op, num2) {
@@ -71,7 +71,7 @@ function operate (num1, op, num2) {
         return subtract(num1, num2);
     } else if (op === "*") {
         return multiply(num1, num2);
-    } else {
+    } else if (op === "/"){
         return divide(num1, num2);
     };
 };
@@ -90,8 +90,8 @@ function displayButtonText (e) {
 let singleButton = document.querySelectorAll(".singleButton");
 singleButton.forEach((but) => {
     but.addEventListener("click", (e) => {
-        // clear the display once if the operator was clicked
-        if (operator !== "") {
+        // clear the display once if the operator was clicked (or on the first press)
+        if (operator !== "" || operator === 1) {
             if (count < 1) {
                 displayContent.textContent = "";
                 count += 1;
@@ -116,7 +116,7 @@ let operators = document.querySelectorAll(".operator");
 operators.forEach((oper) => {
     oper.addEventListener("click", (e) => {
         //add nested if statement for double press of operator?
-        if (operator !== "") {
+        if (operator !== "" && operator !== 1) {
             count = 0;
             secondNumber = displayContent.innerText;
             solution = operate(Number(firstNumber), operator, Number(secondNumber));
@@ -127,6 +127,7 @@ operators.forEach((oper) => {
             firstNumber = displayContent.innerText;
             operator = e.target.innerText;
         } else {
+            count = 0;
             operator = e.target.innerText;
             firstNumber = displayContent.innerText;
         }
@@ -136,12 +137,14 @@ operators.forEach((oper) => {
 // Add equals event listener
 let equals = document.querySelector(".equals");
 equals.addEventListener("click", () => {
-    secondNumber = displayContent.innerText;
-    solution = operate(Number(firstNumber), operator, Number(secondNumber));
-    if (solution.length > 17) {
-        solution = solution.toPrecision(13);
+    if (operator !== "") {
+        secondNumber = displayContent.innerText;
+        solution = operate(Number(firstNumber), operator, Number(secondNumber));
+        if (solution.length > 17) {
+            solution = solution.toPrecision(13);
+        };
+        displayContent.textContent = solution;
+        operator = "";
+        count = 0;
     };
-    displayContent.textContent = solution;
-    operator = "";
-    count = 0;
 });
