@@ -81,7 +81,7 @@ let displayContent = document.querySelector(".displayContent");
 function displayButtonText (e) {
     let buttonText = e.target.innerText;
     let displayText = document.createTextNode(buttonText);
-    if (displayContent.innerText.length < 17) {
+    if (displayContent.innerText.length < 16) {
     displayContent.appendChild(displayText);
     }
 };
@@ -103,25 +103,30 @@ singleButton.forEach((but) => {
 
 // Add event listener for clear button click
 let clearButton = document.querySelector(".clearButton");
-clearButton.addEventListener("click", () => displayContent.textContent = "");
+clearButton.addEventListener("click", () => {
+    displayContent.textContent = "";
+    operator = "";
+    count = 0; 
+});
 
 // Add event listener for back button
 let backButton = document.querySelector(".backButton");
-backButton.addEventListener("click", () => { 
+backButton.addEventListener("click", () => {
+    if (displayContent.innerText !== solution.toString()) { 
     displayContent.removeChild(displayContent.lastChild);
+    }
 });
 
 // Add event listener for first number (first operator)
 let operators = document.querySelectorAll(".operator");
 operators.forEach((oper) => {
     oper.addEventListener("click", (e) => {
-        //add nested if statement for double press of operator?
         if (operator !== "" && operator !== 1) {
             count = 0;
             secondNumber = displayContent.innerText;
             solution = operate(Number(firstNumber), operator, Number(secondNumber));
-            if (solution.length > 17) {
-                solution = solution.toPrecision(13);
+            if (solution.toString().length > 16) {
+                solution = solution.toPrecision(3);
             };
             displayContent.textContent = solution;
             firstNumber = displayContent.innerText;
@@ -140,8 +145,8 @@ equals.addEventListener("click", () => {
     if (operator !== "") {
         secondNumber = displayContent.innerText;
         solution = operate(Number(firstNumber), operator, Number(secondNumber));
-        if (solution.length > 17) {
-            solution = solution.toPrecision(13);
+        if (solution.toString().length > 16) {
+            solution = solution.toPrecision(3);
         };
         displayContent.textContent = solution;
         operator = "";
