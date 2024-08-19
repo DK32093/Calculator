@@ -57,9 +57,10 @@ function divide (a, b) {
 
 // Calculator operation variables
 let firstNumber;
-let operator;
+let operator = "";
 let secondNumber;
 let solution;
+let count = 0;
 
 // Operate function for when "=" is clicked
 function operate (num1, op, num2) {
@@ -84,8 +85,16 @@ function displayButtonText (e) {
 
 // Add event listener to display value button clicks
 let singleButton = document.querySelectorAll(".singleButton");
-singleButton.forEach((but) => { 
-    but.addEventListener("click", displayButtonText)
+singleButton.forEach((but) => {
+    but.addEventListener("click", (e) => {
+        // clear the display once if the operator was clicked
+        if (operator !== "") {
+            do {displayContent.textContent = "";
+                count += 1;
+            } while (count < 1);
+        };
+        displayButtonText(e);
+    });
 });
 
 // Add event listener for clear button click
@@ -102,11 +111,23 @@ backButton.addEventListener("click", () => {
 let operators = document.querySelectorAll(".operator");
 operators.forEach((oper) => {
     oper.addEventListener("click", (e) => {
-        firstNumber = displayContent.innerText.slice(0, -1);
-        operator = e.target.innerText})
+        //add nested if statement for double press of operator
+        if (operator !== "") {
+            count = 0;
+            secondNumber = displayContent.innerText;
+            solution = operate(Number(firstNumber), operator, Number(secondNumber));
+            displayContent.textContent = solution;
+            firstNumber = displayContent.innerText;
+            operator = e.target.innerText;
+        } else {
+            operator = e.target.innerText;
+            firstNumber = displayContent.innerText;
+        }
+    })
 });
 
 // Add equals event listener
+// clear operator
 let equals = document.querySelector(".equals");
 equals.addEventListener("click", () => {
     secondNumber = displayContent.innerText.slice(firstNumber.length + 1);
