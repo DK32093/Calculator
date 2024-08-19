@@ -52,6 +52,7 @@ function multiply (a, b) {
 };
 
 function divide (a, b) {
+    if (b === 0) return "How dare you?!";
     return a / b;
 };
 
@@ -89,10 +90,11 @@ singleButton.forEach((but) => {
     but.addEventListener("click", (e) => {
         // clear the display once if the operator was clicked
         if (operator !== "") {
-            do {displayContent.textContent = "";
+            if (count < 1) {
+                displayContent.textContent = "";
                 count += 1;
-            } while (count < 1);
-        };
+            }
+        }
         displayButtonText(e);
     });
 });
