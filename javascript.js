@@ -81,7 +81,9 @@ let displayContent = document.querySelector(".displayContent");
 function displayButtonText (e) {
     let buttonText = e.target.innerText;
     let displayText = document.createTextNode(buttonText);
+    if (displayContent.innerText.length < 17) {
     displayContent.appendChild(displayText);
+    }
 };
 
 // Add event listener to display value button clicks
@@ -118,6 +120,9 @@ operators.forEach((oper) => {
             count = 0;
             secondNumber = displayContent.innerText;
             solution = operate(Number(firstNumber), operator, Number(secondNumber));
+            if (solution.length > 17) {
+                solution = solution.toPrecision(13);
+            };
             displayContent.textContent = solution;
             firstNumber = displayContent.innerText;
             operator = e.target.innerText;
@@ -133,6 +138,10 @@ let equals = document.querySelector(".equals");
 equals.addEventListener("click", () => {
     secondNumber = displayContent.innerText;
     solution = operate(Number(firstNumber), operator, Number(secondNumber));
+    if (solution.length > 17) {
+        solution = solution.toPrecision(13);
+    };
     displayContent.textContent = solution;
     operator = "";
+    count = 0;
 });
