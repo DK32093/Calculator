@@ -62,7 +62,7 @@ let secondNumber;
 let solution;
 let count = 0;
 
-// Operate function for when "=" is clicked
+// Operate function for when equals or second operator is clicked
 function operate (num1, op, num2) {
     if (op === "+") {
         return add(num1, num2);
@@ -111,7 +111,7 @@ backButton.addEventListener("click", () => {
 let operators = document.querySelectorAll(".operator");
 operators.forEach((oper) => {
     oper.addEventListener("click", (e) => {
-        //add nested if statement for double press of operator
+        //add nested if statement for double press of operator?
         if (operator !== "") {
             count = 0;
             secondNumber = displayContent.innerText;
@@ -127,10 +127,10 @@ operators.forEach((oper) => {
 });
 
 // Add equals event listener
-// clear operator
 let equals = document.querySelector(".equals");
 equals.addEventListener("click", () => {
-    secondNumber = displayContent.innerText.slice(firstNumber.length + 1);
+    secondNumber = displayContent.innerText;
     solution = operate(Number(firstNumber), operator, Number(secondNumber));
     displayContent.textContent = solution;
+    operator = "";
 });
