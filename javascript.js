@@ -6,7 +6,7 @@ const buttons = document.querySelector(".buttons");
 let buttonText = ["7", "8", "9", "+", "-", 
               "4", "5", "6", "*", "/", 
               "1", "2", "3", ".", "=", 
-              "0", "clear", " ", "back"]
+              "0", "CLEAR", " ", "BACK"]
 
 let ind = 0;
 for (let i = 1; i <= 4; i++) {
@@ -53,7 +53,7 @@ function multiply (a, b) {
 };
 
 function divide (a, b) {
-    if (b === 0) return "How dare you?!";
+    if (b === 0) return "No >:(";
     return a / b;
 };
 
@@ -84,7 +84,7 @@ function displayButtonText (e) {
     if (e.target.innerText === "." && displayContent.textContent === "") {
         displayText = document.createTextNode("0.");
     };
-    if (displayContent.innerText.length < 16) {
+    if (displayContent.innerText.length < 11) {
         displayContent.appendChild(displayText);
     }
 };
@@ -114,7 +114,7 @@ function displayKeyText (e) {
     if (e.key === "." && displayContent.textContent === "") {
         displayText = document.createTextNode("0.");
     };
-    if (displayContent.innerText.length < 16 && buttonText.includes(e.key)) {
+    if (displayContent.innerText.length < 11 && buttonText.includes(e.key)) {
         if (!["+", "-", "*", "/", "="].includes(e.key)) {
             displayContent.appendChild(displayText)
         }
@@ -141,7 +141,7 @@ document.addEventListener("keydown", (e) => {
             count = 0;
             secondNumber = displayContent.innerText;
             solution = operate(Number(firstNumber), operator, Number(secondNumber));
-            if (solution.toString().length > 16) {
+            if (solution.toString().length > 11) {
                 solution = solution.toPrecision(3);
             };
             displayContent.textContent = solution;
@@ -157,7 +157,7 @@ document.addEventListener("keydown", (e) => {
         if (operator !== "" && operator !== 1) {
             secondNumber = displayContent.innerText;
             solution = operate(Number(firstNumber), operator, Number(secondNumber));
-            if (solution.toString().length > 16) {
+            if (solution.toString().length > 11) {
                 solution = solution.toPrecision(3);
             };
             displayContent.textContent = solution;
@@ -205,7 +205,7 @@ operators.forEach((oper) => {
             count = 0;
             secondNumber = displayContent.innerText;
             solution = operate(Number(firstNumber), operator, Number(secondNumber));
-            if (solution.toString().length > 16) {
+            if (solution.toString().length > 11) {
                 solution = solution.toPrecision(3);
             };
             displayContent.textContent = solution;
@@ -225,7 +225,7 @@ equals.addEventListener("click", () => {
     if (operator !== "" && operator !== 1) {
         secondNumber = displayContent.innerText;
         solution = operate(Number(firstNumber), operator, Number(secondNumber));
-        if (solution.toString().length > 16) {
+        if (solution.toString().length > 11) {
             solution = solution.toPrecision(3);
         };
         displayContent.textContent = solution;
