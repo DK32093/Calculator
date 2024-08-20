@@ -59,7 +59,7 @@ function divide (a, b) {
 
 // Calculator operation variables
 let firstNumber;
-let operator = 1; // Set to 1 to clear the first "0" in the opening display
+let operator = 1; // Set to 1 to clear the first "0" and after "=" in display
 let secondNumber;
 let solution;
 let count = 0; // Used to clear display for a new entry after an operator
@@ -77,13 +77,17 @@ function operate (num1, op, num2) {
     };
 };
 
-// Display function
+// Display button text function
 let displayContent = document.querySelector(".displayContent");
 function displayButtonText (e) {
-    let buttonText = e.target.innerText;
-    let displayText = document.createTextNode(buttonText);
+    let displayText = document.createTextNode(e.target.innerText);
+    if (e.target.innerText === "." && displayContent.textContent === "") {
+        displayText = document.createTextNode("0.");
+        console.log(displayText);
+    };
     if (displayContent.innerText.length < 16) {
-    displayContent.appendChild(displayText);
+        console.log(displayText);
+        displayContent.appendChild(displayText);
     }
 };
 
@@ -104,6 +108,33 @@ singleButton.forEach((but) => {
         if (displayContent.textContent.includes(".")) period.disabled = true;
     });
 });
+
+// Display key text function
+function displayKeyText (e) {
+    let displayText = document.createTextNode(e.key);
+    if (e.key === "." && displayContent.textContent === "") {
+        displayText = document.createTextNode("0.");
+        console.log(displayText);
+    };
+    if (displayContent.innerText.length < 16) {
+        console.log(displayText);
+        displayContent.appendChild(displayText);
+    }
+};
+
+// Add event listener for keyboard value presses
+document.addEventListener("keydown", (e) => {
+    if (operator !== "" || operator === 1) {
+        if (count < 1) {
+            displayContent.textContent = "";
+            period.disabled = false;
+            count += 1;
+        }
+    }
+    displayKeyText(e);
+    if (displayContent.textContent.includes(".")) period.disabled = true;
+});
+
 
 // Add event listener for clear button click
 let clearButton = document.querySelector(".clearButton");
@@ -155,7 +186,6 @@ equals.addEventListener("click", () => {
         };
         displayContent.textContent = solution;
         operator = 1;
-        period.disabled = false
         count = 0;
     };
 });
