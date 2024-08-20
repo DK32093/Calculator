@@ -83,10 +83,8 @@ function displayButtonText (e) {
     let displayText = document.createTextNode(e.target.innerText);
     if (e.target.innerText === "." && displayContent.textContent === "") {
         displayText = document.createTextNode("0.");
-        console.log(displayText);
     };
     if (displayContent.innerText.length < 16) {
-        console.log(displayText);
         displayContent.appendChild(displayText);
     }
 };
@@ -114,11 +112,11 @@ function displayKeyText (e) {
     let displayText = document.createTextNode(e.key);
     if (e.key === "." && displayContent.textContent === "") {
         displayText = document.createTextNode("0.");
-        console.log(displayText);
     };
-    if (displayContent.innerText.length < 16) {
-        console.log(displayText);
-        displayContent.appendChild(displayText);
+    if (displayContent.innerText.length < 16 && buttonText.includes(e.key)) {
+        if (!["+", "-", "*", "/", "="].includes(e.key)) {
+        displayContent.appendChild(displayText)
+        }
     }
 };
 
