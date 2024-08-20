@@ -16,7 +16,7 @@ for (let i = 1; i <= 4; i++) {
     for (let c = 1; c <= 5; c++) {
         let newBut = document.createElement("button");
         newBut.textContent = buttonText[ind];
-        ind = ind + 1;
+        ind += 1;
         row.appendChild(newBut);
         if (i === 4 && c === 4) {
             newBut.setAttribute("class", "backButton");
@@ -34,6 +34,7 @@ for (let i = 1; i <= 4; i++) {
         };
         // Add "equals" class
         if (newBut.innerText === "=") newBut.setAttribute("class", "equals");
+        if (i === 3 && c === 4) newBut.classList.add("period");
     }
 };
 
@@ -87,17 +88,20 @@ function displayButtonText (e) {
 };
 
 // Add event listener to display value button clicks
-let singleButton = document.querySelectorAll(".singleButton");
+const singleButton = document.querySelectorAll(".singleButton");
+const period = document.querySelector(".period");
 singleButton.forEach((but) => {
     but.addEventListener("click", (e) => {
-        // clear the display once if the operator was clicked (or on the first press)
+        // clear the display once if the operator or equals was clicked (or on the first press)
         if (operator !== "" || operator === 1) {
             if (count < 1) {
                 displayContent.textContent = "";
+                period.disabled = false;
                 count += 1;
             }
         }
         displayButtonText(e);
+        if (displayContent.textContent.includes(".")) period.disabled = true;
     });
 });
 
@@ -106,6 +110,7 @@ let clearButton = document.querySelector(".clearButton");
 clearButton.addEventListener("click", () => {
     displayContent.textContent = "";
     operator = "";
+    period.disabled = false
     count = 0; 
 });
 
@@ -117,7 +122,7 @@ backButton.addEventListener("click", () => {
     }
 });
 
-// Add event listener for first number (first operator)
+// Add event listener for operators
 let operators = document.querySelectorAll(".operator");
 operators.forEach((oper) => {
     oper.addEventListener("click", (e) => {
@@ -142,14 +147,15 @@ operators.forEach((oper) => {
 // Add equals event listener
 let equals = document.querySelector(".equals");
 equals.addEventListener("click", () => {
-    if (operator !== "") {
+    if (operator !== "" && operator !== 1) {
         secondNumber = displayContent.innerText;
         solution = operate(Number(firstNumber), operator, Number(secondNumber));
         if (solution.toString().length > 16) {
             solution = solution.toPrecision(3);
         };
         displayContent.textContent = solution;
-        operator = "";
+        operator = 1;
+        period.disabled = false
         count = 0;
     };
 });
