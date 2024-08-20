@@ -99,6 +99,7 @@ singleButton.forEach((but) => {
             if (count < 1) {
                 displayContent.textContent = "";
                 period.disabled = false;
+                backButton.disabled = false;
                 count += 1;
             }
         }
@@ -121,12 +122,16 @@ function displayKeyText (e) {
 };
 
 // Add event listener for keyboard value presses
+let numKeys = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 document.addEventListener("keydown", (e) => {
+    e.preventDefault();
     if (operator !== "" || operator === 1) {
-        if (count < 1) {
-            displayContent.textContent = "";
-            period.disabled = false;
-            count += 1;
+        if (numKeys.includes(e.key)) {
+            if (count < 1) {
+                displayContent.textContent = "";
+                period.disabled = false;
+                count += 1;
+            }
         }
     }
     if(["+", "-", "*", "/"].includes(e.key)) {
@@ -146,6 +151,23 @@ document.addEventListener("keydown", (e) => {
             firstNumber = displayContent.innerText;
         }
     }
+    if (e.key === "=" || e.key === "Enter") {
+        if (operator !== "" && operator !== 1) {
+            secondNumber = displayContent.innerText;
+            solution = operate(Number(firstNumber), operator, Number(secondNumber));
+            if (solution.toString().length > 16) {
+                solution = solution.toPrecision(3);
+            };
+            displayContent.textContent = solution;
+            operator = 1;
+            count = 0;
+        };
+    }
+    if (e.key === "Backspace") {
+        if (solution === undefined || displayContent.innerText !== solution.toString()) { 
+            displayContent.removeChild(displayContent.lastChild);
+        }
+    }
     displayKeyText(e);
     if (displayContent.textContent.includes(".")) period.disabled = true;
 });
@@ -154,8 +176,8 @@ document.addEventListener("keydown", (e) => {
 // Add event listener for clear button click
 let clearButton = document.querySelector(".clearButton");
 clearButton.addEventListener("click", () => {
-    displayContent.textContent = "";
-    operator = "";
+    displayContent.textContent = "0";
+    operator = 1;
     period.disabled = false
     count = 0; 
 });
@@ -163,8 +185,8 @@ clearButton.addEventListener("click", () => {
 // Add event listener for back button
 let backButton = document.querySelector(".backButton");
 backButton.addEventListener("click", () => {
-    if (displayContent.innerText !== solution.toString()) { 
-    displayContent.removeChild(displayContent.lastChild);
+    if (solution === undefined || displayContent.innerText !== solution.toString()) { 
+        displayContent.removeChild(displayContent.lastChild);
     }
 });
 
@@ -172,6 +194,7 @@ backButton.addEventListener("click", () => {
 let operators = document.querySelectorAll(".operator");
 operators.forEach((oper) => {
     oper.addEventListener("click", (e) => {
+        backButton.disabled = true;
         if (operator !== "" && operator !== 1) {
             count = 0;
             secondNumber = displayContent.innerText;
