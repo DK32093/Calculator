@@ -130,11 +130,13 @@ document.addEventListener("keydown", (e) => {
             if (count < 1) {
                 displayContent.textContent = "";
                 period.disabled = false;
+                backButton.disabled = false;
                 count += 1;
             }
         }
     }
     if(["+", "-", "*", "/"].includes(e.key)) {
+        backButton.disabled = true;
         if (operator !== "" && operator !== 1) {
             count = 0;
             secondNumber = displayContent.innerText;
@@ -165,7 +167,9 @@ document.addEventListener("keydown", (e) => {
     }
     if (e.key === "Backspace") {
         if (solution === undefined || displayContent.innerText !== solution.toString()) { 
-            displayContent.removeChild(displayContent.lastChild);
+            if (displayContent.innerText.length > 0) {
+                displayContent.removeChild(displayContent.lastChild);
+            }
         }
     }
     displayKeyText(e);
@@ -186,7 +190,9 @@ clearButton.addEventListener("click", () => {
 let backButton = document.querySelector(".backButton");
 backButton.addEventListener("click", () => {
     if (solution === undefined || displayContent.innerText !== solution.toString()) { 
-        displayContent.removeChild(displayContent.lastChild);
+        if (displayContent.innerText.length > 0) {
+            displayContent.removeChild(displayContent.lastChild);
+        }
     }
 });
 
