@@ -115,7 +115,7 @@ function displayKeyText (e) {
     };
     if (displayContent.innerText.length < 16 && buttonText.includes(e.key)) {
         if (!["+", "-", "*", "/", "="].includes(e.key)) {
-        displayContent.appendChild(displayText)
+            displayContent.appendChild(displayText)
         }
     }
 };
@@ -127,6 +127,23 @@ document.addEventListener("keydown", (e) => {
             displayContent.textContent = "";
             period.disabled = false;
             count += 1;
+        }
+    }
+    if(["+", "-", "*", "/"].includes(e.key)) {
+        if (operator !== "" && operator !== 1) {
+            count = 0;
+            secondNumber = displayContent.innerText;
+            solution = operate(Number(firstNumber), operator, Number(secondNumber));
+            if (solution.toString().length > 16) {
+                solution = solution.toPrecision(3);
+            };
+            displayContent.textContent = solution;
+            firstNumber = displayContent.innerText;
+            operator = e.key;
+        } else {
+            count = 0;
+            operator = e.key;
+            firstNumber = displayContent.innerText;
         }
     }
     displayKeyText(e);
